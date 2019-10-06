@@ -5,17 +5,43 @@ import java.util.Collection;
 public class EndGame extends genericSearch implements Problem {
 	
 	EndGameState state;
-	
+	char[][] grid;
+	static char rows;
+	static char columns;
 	
 	
 	public EndGame(String grid) {
-		
+		getInitialState(grid);
 	}
 	
-	@Override
-	public State getInitialState() {
+	public Object getInitialState(String grid) {
 		// TODO Auto-generated method stub
+		String[] a = grid.split(";");
+		String[] dimensions = a[0].split(",");
+		String[] ironlocs = a[1].split(",");
+		String[] thanoslocs = a[2].split(",");
+		String[] stoneslocs = a[3].split(",");
+		String[] warriorlocs = a[4].split(",");
 		
+		//Viz
+		rows = dimensions[0].charAt(0);
+		columns = dimensions[1].charAt(0);
+		this.grid = new char[rows][columns];
+		//-------------------------------
+		
+		byte h = Byte.parseByte(dimensions[0]);
+				
+		
+		
+//		
+//		
+//		ironx = Short.parseShort(ironlocs[0]);
+//		irony = Short.parseShort(ironlocs[1]);
+//		thanosx = Short.parseShort(thanoslocs[0]);
+//		thanosy = Short.parseShort(thanoslocs[1]);
+//		
+//		
+//		
 		return null;
 	}
 
@@ -47,11 +73,6 @@ public class EndGame extends genericSearch implements Problem {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		char x = 3 ; 
-		System.out.println(x -2);
-	}
+
+
 }
