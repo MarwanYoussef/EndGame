@@ -3,10 +3,15 @@ package defaultPackage;
 import java.util.Collection;
 
 public class EndGame extends genericSearch implements Problem {
-
+	
+	public EndGame(char xi, char yi, char xt, char yt, char[] w, char[] s) {
+		
+	}
+	
 	@Override
 	public Object getInitialState() {
 		// TODO Auto-generated method stub
+		
 		
 		return null;
 	}
