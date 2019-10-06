@@ -2,9 +2,13 @@ package defaultPackage;
 
 public class main {
 	
+	private EndGame e;
+	private static int rows;
+	private int columns;
+	
 	// Solve function takes critical inputs to represent our problem and it's parameters
 	public static String solve(String grid, String strategy, boolean visualize) {
-		
+		//EndGame e = new EndGame();
 		if(visualize) {
 			toString(grid);
 		}
