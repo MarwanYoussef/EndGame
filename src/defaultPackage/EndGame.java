@@ -6,15 +6,28 @@ public class EndGame extends genericSearch implements Problem {
 	
 	static short rows;
 	static short columns;
+	static short ironx, irony;
+	static short thanosx, thanosy;
 	
 	public EndGame(String grid) {
-		
+		getInitialState(grid);
 	}
 	
 	@Override
-	public Object getInitialState() {
+	public Object getInitialState(String grid) {
 		// TODO Auto-generated method stub
-		
+		String[] a = grid.split(";");
+		String[] dimensions = a[0].split(",");
+		String[] ironlocs = a[1].split(",");
+		String[] thanoslocs = a[2].split(",");
+		String[] stoneslocs = a[3].split(",");
+		String[] warriorlocs = a[4].split(",");
+		rows = Short.parseShort(dimensions[0]);
+		columns = Short.parseShort(dimensions[1]);
+		ironx = Short.parseShort(ironlocs[0]);
+		irony = Short.parseShort(ironlocs[1]);
+		thanosx = Short.parseShort(thanoslocs[0]);
+		thanosy = Short.parseShort(thanoslocs[1]);
 		return null;
 	}
 
@@ -50,16 +63,21 @@ public class EndGame extends genericSearch implements Problem {
 	
 	public static void parser(String grid) {
 		String[] a = grid.split(";");
-		int index = 0;
-		String[] locs = a[0].split(",");
-		rows = Short.parseShort(locs[0]);
-		columns = Short.parseShort(locs[1]);
-		System.out.println(rows);
-		System.out.println(columns);
-		}
+		String[] dimensions = a[0].split(",");
+		String[] ironlocs = a[1].split(",");
+		String[] thanoslocs = a[2].split(",");
+		String[] stoneslocs = a[3].split(",");
+		String[] warriorlocs = a[4].split(",");
+		rows = Short.parseShort(dimensions[0]);
+		columns = Short.parseShort(dimensions[1]);
+		ironx = Short.parseShort(ironlocs[0]);
+		irony = Short.parseShort(ironlocs[1]);
+		thanosx = Short.parseShort(thanoslocs[0]);
+		thanosy = Short.parseShort(thanoslocs[1]);
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		parser("5,5;ix,iy;tx,ty;s1,x,s1y,s2x,s2y,s3x,s3y,s4x,s4y,s5x,s5y,s6x,s6y;w1x,w1y,w2x,w2y,w3x,w3y,w4x,w4y,w5x,w5y");
+		parser("5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3");
 	}
 }
