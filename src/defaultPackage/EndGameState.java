@@ -1,44 +1,32 @@
 package defaultPackage;
 
+import java.util.ArrayList;
+
 public class EndGameState implements State {
 	
-	static char[] ir = new char[2];
-	static char[] thanos = new char[2];
-	static char[][] warriors;
-	static char[][] stones = new char[6][2];
-	char damage = 0;
+	static byte ir;
+	static ArrayList<Byte> warriors;
+	static ArrayList<Byte> stones;
 	boolean snapped = false;
 	
 	
-	public static char[] getIr() {
+	public static byte getIr() {
 		return ir;
 	}
-	public static void setIr(char[] ir) {
+	public static void setIr(byte ir) {
 		EndGameState.ir = ir;
 	}
-	public static char[] getThanos() {
-		return thanos;
-	}
-	public static void setThanos(char[] thanos) {
-		EndGameState.thanos = thanos;
-	}
-	public static char[][] getWarriors() {
+	public static ArrayList<Byte> getWarriors() {
 		return warriors;
 	}
-	public static void setWarriors(char[][] warriors) {
+	public static void setWarriors(ArrayList<Byte> warriors) {
 		EndGameState.warriors = warriors;
 	}
-	public static char[][] getStones() {
+	public static ArrayList<Byte> getStones() {
 		return stones;
 	}
-	public static void setStones(char[][] stones) {
+	public static void setStones(ArrayList<Byte> stones) {
 		EndGameState.stones = stones;
-	}
-	public char getDamage() {
-		return damage;
-	}
-	public void setDamage(char damage) {
-		this.damage = damage;
 	}
 	public boolean isSnapped() {
 		return snapped;
@@ -48,5 +36,9 @@ public class EndGameState implements State {
 	}
 	
 	
-
+	
+	
+	
 }
+	
+	

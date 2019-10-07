@@ -5,9 +5,10 @@ import java.util.Collection;
 public class EndGame extends genericSearch implements Problem {
 	
 	EndGameState state;
-	char[][] grid;
-	static char rows;
-	static char columns;
+	byte[][] grid;
+	static byte rows;
+	static byte columns;
+	static byte thanos;
 	
 	
 	public EndGame(String grid) {
@@ -24,24 +25,37 @@ public class EndGame extends genericSearch implements Problem {
 		String[] warriorlocs = a[4].split(",");
 		
 		//Viz
-		rows = dimensions[0].charAt(0);
-		columns = dimensions[1].charAt(0);
-		this.grid = new char[rows][columns];
+		rows = Byte.parseByte(dimensions[0]);
+		columns = Byte.parseByte(dimensions[1]);
+		this.grid = new byte[rows][columns];
 		//-------------------------------
 		
-		byte h = Byte.parseByte(dimensions[0]);
-				
+		byte thanosx = Byte.parseByte(thanoslocs[0]);
+		byte thanosy = Byte.parseByte(thanoslocs[1]);
+		this.thanos = encode_position(thanosx, thanosy, columns);
+		
+		byte irx = Byte.parseByte(ironlocs[0]);
+		byte iry = Byte.parseByte(ironlocs[1]);
+		state.setIr(encode_position(irx, iry, columns));
 		
 		
-//		
-//		
-//		ironx = Short.parseShort(ironlocs[0]);
-//		irony = Short.parseShort(ironlocs[1]);
-//		thanosx = Short.parseShort(thanoslocs[0]);
-//		thanosy = Short.parseShort(thanoslocs[1]);
-//		
-//		
-//		
+		
+		for (int i = 0; i < warriorlocs.length; i+=2) {
+			state.getWarriors().add(Byte.parseByte(warriorlocs[i]));
+			
+			if(i+1 == warriorlocs.length)
+				state.getWarriors().add(Byte.parseByte(warriorlocs[i+1]));
+			
+		}
+		
+		for (int i = 0; i < stoneslocs.length; i+=2) {
+			state.getStones().add(Byte.parseByte(stoneslocs[i]));
+			
+			if(i+1 == warriorlocs.length)
+				state.getStones().add(Byte.parseByte(stoneslocs[i+1]));
+			
+		}
+			
 		return null;
 	}
 
@@ -74,5 +88,17 @@ public class EndGame extends genericSearch implements Problem {
 		return null;
 	}
 
+	//------Encode Position------
+		public static byte encode_position(byte x, byte y, byte rows) {
+			return (byte)((rows*x)+ y-128);
+		}
+		
+		public static byte[] decode_position(byte hash,byte rows) {
+			char hash_int = (char) (hash+128);
+			int unpair1 = Math.floorDiv(hash_int, rows);
+			int unpair2 = hash_int%rows;
+			byte[] pair = {(byte) unpair1,(byte) unpair2};
+			return pair;
+		}
 
 }
