@@ -5,28 +5,28 @@ import java.util.List;
 
 public class Node {
 	
-	private Object state;
+	private State state;
 	private Node parent;
 	private Enum operator;
 	private double pathCost;
 	
-	public Node(Object state) {
+	public Node(State state) {
 		this.state = state;
 		this.pathCost = 0.0;
 	}
 	
-	public Node(Object state, Node parent, Enum operator, double stepCost) {
+	public Node(State state, Node parent, Enum operator, double stepCost) {
 		this(state);
 		this.parent = parent;
 		this.operator = operator;
 		this.pathCost = pathCost + stepCost;
 	}
 
-	public Object getState() {
+	public State getState() {
 		return state;
 	}
 
-	public void setState(Object state) {
+	public void setState(State state) {
 		this.state = state;
 	}
 

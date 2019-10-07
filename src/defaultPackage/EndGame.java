@@ -15,7 +15,7 @@ public class EndGame extends genericSearch implements Problem {
 		getInitialState(grid);
 	}
 	
-	public Object getInitialState(String grid) {
+	public void getInitialState(String grid) {
 		// TODO Auto-generated method stub
 		String[] a = grid.split(";");
 		String[] dimensions = a[0].split(",");
@@ -41,22 +41,16 @@ public class EndGame extends genericSearch implements Problem {
 		
 		
 		for (int i = 0; i < warriorlocs.length; i+=2) {
-			state.getWarriors().add(Byte.parseByte(warriorlocs[i]));
-			
-			if(i+1 == warriorlocs.length)
-				state.getWarriors().add(Byte.parseByte(warriorlocs[i+1]));
+			byte index = encode_position(Byte.parseByte(warriorlocs[i]), Byte.parseByte(warriorlocs[i+1]), columns);
+			state.getWarriors().add(index);
 			
 		}
 		
 		for (int i = 0; i < stoneslocs.length; i+=2) {
-			state.getStones().add(Byte.parseByte(stoneslocs[i]));
-			
-			if(i+1 == warriorlocs.length)
-				state.getStones().add(Byte.parseByte(stoneslocs[i+1]));
+			byte index = encode_position(Byte.parseByte(stoneslocs[i]), Byte.parseByte(stoneslocs[i+1]), columns);
+			state.getStones().add(index);
 			
 		}
-			
-		return null;
 	}
 
 	@Override
