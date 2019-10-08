@@ -9,6 +9,12 @@ public class EndGameState implements State {
 	static ArrayList<Byte> stones;
 	boolean snapped = false;
 	
+	public EndGameState(byte ir, ArrayList<Byte> warriors, ArrayList<Byte> stones) {
+		this.ir = ir;
+		this.warriors = warriors;
+		this.stones = stones;
+	}
+	
 	
 	public static byte getIr() {
 		return ir;

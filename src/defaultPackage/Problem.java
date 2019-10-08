@@ -8,7 +8,7 @@ public interface Problem {
 	public void getInitialState(String grid);
     public boolean isGoal(State state);
     public Collection<State> getActions(State state);
-    public Object getNextState(State state, State action);
-    public double getStepCost(State start, State action, State dest);
+    public State getNextState(State state, Operators action);
+    public byte getStepCost(State start, Operators action);
 
 }
