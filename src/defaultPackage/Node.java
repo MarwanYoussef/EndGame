@@ -9,17 +9,19 @@ public class Node {
 	private Node parent;
 	private Enum operator;
 	private double pathCost;
+	private int depth;
 	
 	public Node(State state) {
 		this.state = state;
 		this.pathCost = 0.0;
 	}
 	
-	public Node(State state, Node parent, Enum operator, double stepCost) {
+	public Node(State state, Node parent, Enum operator, double stepCost, int depth) {
 		this(state);
 		this.parent = parent;
 		this.operator = operator;
-		this.pathCost = pathCost + stepCost;
+		this.pathCost = parent.pathCost + stepCost;
+		this.depth = depth;
 	}
 
 	public State getState() {

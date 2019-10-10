@@ -6,7 +6,7 @@ import java.util.Collections;
 
 public class EndGame extends genericSearch implements Problem {
 	
-	EndGameState state;
+	EndGameState inState;
 	byte[][] grid;
 	static byte rows;
 	static byte columns;
@@ -14,45 +14,45 @@ public class EndGame extends genericSearch implements Problem {
 	
 	
 	public EndGame(String grid) {
-		getInitialState(grid);
+		// TODO Auto-generated method stub
+				String[] a = grid.split(";");
+				String[] dimensions = a[0].split(",");
+				String[] ironlocs = a[1].split(",");
+				String[] thanoslocs = a[2].split(",");
+				String[] stoneslocs = a[3].split(",");
+				String[] warriorlocs = a[4].split(",");
+				
+				//Viz
+				rows = Byte.parseByte(dimensions[0]);
+				columns = Byte.parseByte(dimensions[1]);
+				this.grid = new byte[rows][columns];
+				//-------------------------------
+				
+				byte thanosx = Byte.parseByte(thanoslocs[0]);
+				byte thanosy = Byte.parseByte(thanoslocs[1]);
+				this.thanos = encode_position(thanosx, thanosy, columns);
+				
+				byte irx = Byte.parseByte(ironlocs[0]);
+				byte iry = Byte.parseByte(ironlocs[1]);
+				inState.setIr(encode_position(irx, iry, columns));
+				
+				
+				
+				for (int i = 0; i < warriorlocs.length; i+=2) {
+					byte index = encode_position(Byte.parseByte(warriorlocs[i]), Byte.parseByte(warriorlocs[i+1]), columns);
+					inState.getWarriors().add(index);
+					
+				}
+				
+				for (int i = 0; i < stoneslocs.length; i+=2) {
+					byte index = encode_position(Byte.parseByte(stoneslocs[i]), Byte.parseByte(stoneslocs[i+1]), columns);
+					inState.getStones().add(index);
+					
+				}
 	}
 	
-	public void getInitialState(String grid) {
-		// TODO Auto-generated method stub
-		String[] a = grid.split(";");
-		String[] dimensions = a[0].split(",");
-		String[] ironlocs = a[1].split(",");
-		String[] thanoslocs = a[2].split(",");
-		String[] stoneslocs = a[3].split(",");
-		String[] warriorlocs = a[4].split(",");
-		
-		//Viz
-		rows = Byte.parseByte(dimensions[0]);
-		columns = Byte.parseByte(dimensions[1]);
-		this.grid = new byte[rows][columns];
-		//-------------------------------
-		
-		byte thanosx = Byte.parseByte(thanoslocs[0]);
-		byte thanosy = Byte.parseByte(thanoslocs[1]);
-		this.thanos = encode_position(thanosx, thanosy, columns);
-		
-		byte irx = Byte.parseByte(ironlocs[0]);
-		byte iry = Byte.parseByte(ironlocs[1]);
-		state.setIr(encode_position(irx, iry, columns));
-		
-		
-		
-		for (int i = 0; i < warriorlocs.length; i+=2) {
-			byte index = encode_position(Byte.parseByte(warriorlocs[i]), Byte.parseByte(warriorlocs[i+1]), columns);
-			state.getWarriors().add(index);
-			
-		}
-		
-		for (int i = 0; i < stoneslocs.length; i+=2) {
-			byte index = encode_position(Byte.parseByte(stoneslocs[i]), Byte.parseByte(stoneslocs[i+1]), columns);
-			state.getStones().add(index);
-			
-		}
+	public State getInitialState() {
+		return this.inState;
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class EndGame extends genericSearch implements Problem {
 		
 		byte cost = 0;
 		if (action == Operators.UP || action == Operators.DOWN || action == Operators.RIGHT || action == Operators.LEFT) {
-			byte[] location = decode_position(((EndGameState) state).getIr(), columns);
+			byte[] location = decode_position(((EndGameState) start).getIr(), columns);
 			byte[] new_location = new byte[2] ;
 			
 		if(action == Operators.UP) {
@@ -218,7 +218,7 @@ public class EndGame extends genericSearch implements Problem {
 		byte new_location_en = encode_position(new_location[0], new_location[1], columns);
 		byte[] w_around = get_w_around(new_location_en);
 			for (byte b : w_around) {
-				if(((EndGameState) state).getWarriors().contains(b)) {
+				if(((EndGameState) start).getWarriors().contains(b)) {
 					cost+=1;
 				}
 			}
@@ -229,15 +229,15 @@ public class EndGame extends genericSearch implements Problem {
 		}
 		
 		if(action == Operators.COLLECT) {
-			if(((EndGameState) state).getStones().contains(((EndGameState) state).getIr())) {
+			if(((EndGameState) start).getStones().contains(((EndGameState) start).getIr())) {
 				cost+=3;
 			}
 		}
 		
 		if(action == Operators.KILL) {
-			byte[] w_around = get_w_around(((EndGameState) state).getIr());
+			byte[] w_around = get_w_around(((EndGameState) start).getIr());
 			for (byte b : w_around) {
-				if(((EndGameState) state).getWarriors().contains(b)) {
+				if(((EndGameState) start).getWarriors().contains(b)) {
 					cost+=2;
 				}
 			}
@@ -248,7 +248,7 @@ public class EndGame extends genericSearch implements Problem {
 	}
 
 	@Override
-	public String searchProblem(Problem problem, String Strategy) {
+	public Node searchProblem(Problem problem, String Strategy) {
 		// TODO Auto-generated method stub
 		return null;
 	}
