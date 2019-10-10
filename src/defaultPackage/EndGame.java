@@ -61,9 +61,23 @@ public class EndGame extends genericSearch implements Problem {
 	}
 
 	@Override
-	public Collection<State> getActions(State state) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Operators> getActions(State state) {
+		
+		ArrayList<Operators> operators = null;
+		byte[] location = decode_position(((EndGameState) state).getIr(), columns);
+		byte new_location_up = encode_position( (byte) (location[0]-1), location[1], columns);
+		byte new_location_down = encode_position( (byte) (location[0]+1), location[1], columns);
+		byte new_location_left = encode_position(  location[0],  (byte) (location[1]-1), columns);
+		byte new_location_right = encode_position(  location[0],  (byte) (location[1]+1), columns);
+		
+		
+		if(	location[0] != 0 
+		&& 	(!checklocs(((EndGameState) state).getWarriors(), new_location_up)) 
+		&& check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location_up )) 
+		{
+			operators.add(Operators.UP);
+		}
+		return operators;
 	}
 
 	@Override
