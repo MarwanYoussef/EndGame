@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class EndGame extends genericSearch implements Problem {
+public class EndGame implements Problem {
 	
-	EndGameState inState;
+	EndGameState inState = new EndGameState();
 	byte[][] grid;
 	static byte rows;
 	static byte columns;
@@ -36,7 +36,7 @@ public class EndGame extends genericSearch implements Problem {
 				byte iry = Byte.parseByte(ironlocs[1]);
 				inState.setIr(encode_position(irx, iry, columns));
 				
-				
+				//System.out.println(inState);
 				
 				for (int i = 0; i < warriorlocs.length; i+=2) {
 					byte index = encode_position(Byte.parseByte(warriorlocs[i]), Byte.parseByte(warriorlocs[i+1]), columns);
@@ -63,20 +63,51 @@ public class EndGame extends genericSearch implements Problem {
 	@Override
 	public ArrayList<Operators> getActions(State state) {
 		
-		ArrayList<Operators> operators = null;
+		ArrayList<Operators> operators = new ArrayList<Operators>();
 		byte[] location = decode_position(((EndGameState) state).getIr(), columns);
 		byte new_location_up = encode_position( (byte) (location[0]-1), location[1], columns);
 		byte new_location_down = encode_position( (byte) (location[0]+1), location[1], columns);
 		byte new_location_left = encode_position(  location[0],  (byte) (location[1]-1), columns);
 		byte new_location_right = encode_position(  location[0],  (byte) (location[1]+1), columns);
 		
-		
+		operators.add(Operators.KILL);
 		if(	location[0] != 0 
 		&& 	(!checklocs(((EndGameState) state).getWarriors(), new_location_up)) 
 		&& check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location_up )) 
 		{
 			operators.add(Operators.UP);
 		}
+		
+		if(	location[0] != rows-1 
+		&& 	(!checklocs(((EndGameState) state).getWarriors(), new_location_down)) 
+		&& check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location_down )) 
+		{
+			operators.add(Operators.DOWN);
+		}
+		
+		if(	location[1] != 0 
+		&& 	(!checklocs(((EndGameState) state).getWarriors(), new_location_left)) 
+		&& check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location_left )) 
+		{
+			operators.add(Operators.LEFT);
+		}
+				
+		if(	location[1] != columns-1
+		&& 	(!checklocs(((EndGameState) state).getWarriors(), new_location_right)) 
+		&& check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location_right )) 
+		{
+			operators.add(Operators.RIGHT);
+		}
+		
+		if(((EndGameState) state).getStones().contains(((EndGameState) state).getIr())) {
+			operators.add(Operators.COLLECT);
+			
+		}
+		
+		if(((EndGameState) state).getStones().size()==0 || ((EndGameState) state).getIr() == thanos  ) 
+			operators.add(Operators.SNAP);
+
+		
 		return operators;
 	}
 
@@ -87,36 +118,36 @@ public class EndGame extends genericSearch implements Problem {
 		if(action == Operators.UP) {
 			byte[] location = decode_position(((EndGameState) state).getIr(), columns);
 			
-			if(location[0] == 0 ) {
-				return state;
-			}
+//			if(location[0] == 0 ) {
+//				return state;
+//			}
 
 			//new_location = { (byte) (location[0]-1) , location[1] };
 			
 			byte new_location = encode_position( (byte) (location[0]-1), location[1], columns);
 			
-			if((!checklocs(((EndGameState) state).getWarriors(), new_location)) && check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location ) ) {
+		//	if((!checklocs(((EndGameState) state).getWarriors(), new_location)) && check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location ) ) {
 				EndGameState new_state = new EndGameState(new_location, ((EndGameState) state).getWarriors(), ((EndGameState) state).getStones());
 				return new_state;
-			}
+		//	}
 		}
 		
 		if(action == Operators.DOWN) {
 			
 				byte[] location = decode_position(((EndGameState) state).getIr(), columns);
 				
-				if(location[0] == rows ) {
-					return state;
-				}
-
-				//new_location = { (byte) (location[0]-1) , location[1] };
+//				if(location[0] == rows ) {
+//					return state;
+//				}
+//
+//				//new_location = { (byte) (location[0]-1) , location[1] };
 				
 				byte new_location = encode_position( (byte) (location[0]+1), location[1], columns);
 				
-				if((!checklocs(((EndGameState) state).getWarriors(), new_location)) && check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location ) ) {
+		//		if((!checklocs(((EndGameState) state).getWarriors(), new_location)) && check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location ) ) {
 					EndGameState new_state = new EndGameState(new_location, ((EndGameState) state).getWarriors(), ((EndGameState) state).getStones());
 					return new_state;
-				}
+			//	}
 			
 		}
 		
@@ -124,18 +155,18 @@ public class EndGame extends genericSearch implements Problem {
 			
 			byte[] location = decode_position(((EndGameState) state).getIr(), columns);
 			
-			if(location[1] == 0 ) {
-				return state;
-			}
-
-			//new_location = { (byte) (location[0]-1) , location[1] };
-			
+//			if(location[1] == 0 ) {
+//				return state;
+//			}
+//
+//			//new_location = { (byte) (location[0]-1) , location[1] };
+//			
 			byte new_location = encode_position(  location[0],  (byte) (location[1]-1), columns);
 			
-			if((!checklocs(((EndGameState) state).getWarriors(), new_location)) && check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location ) ) {
+			//if((!checklocs(((EndGameState) state).getWarriors(), new_location)) && check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location ) ) {
 				EndGameState new_state = new EndGameState(new_location, ((EndGameState) state).getWarriors(), ((EndGameState) state).getStones());
 				return new_state;
-			}
+			//}
 			
 		}
 		
@@ -143,18 +174,18 @@ public class EndGame extends genericSearch implements Problem {
 			
 			byte[] location = decode_position(((EndGameState) state).getIr(), columns);
 			
-			if(location[1] == columns ) {
-				return state;
-			}
-
-			//new_location = { (byte) (location[0]-1) , location[1] };
+//			if(location[1] == columns ) {
+//				return state;
+//			}
+//
+//			//new_location = { (byte) (location[0]-1) , location[1] };
 			
 			byte new_location = encode_position(  location[0],  (byte) (location[1]+1), columns);
 			
-			if((!checklocs(((EndGameState) state).getWarriors(), new_location)) && check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location ) ) {
+//			if((!checklocs(((EndGameState) state).getWarriors(), new_location)) && check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location ) ) {
 				EndGameState new_state = new EndGameState(new_location, ((EndGameState) state).getWarriors(), ((EndGameState) state).getStones());
 				return new_state;
-			}
+			//}
 			
 		}
 		
@@ -174,7 +205,8 @@ public class EndGame extends genericSearch implements Problem {
 			byte[] new_location = get_w_around( ((EndGameState) state).getIr() );
 			ArrayList<Byte> new_warriors = ((EndGameState) state).getWarriors();
 			
-			new_warriors.remove(new_location[0]);new_warriors.remove(new_location[1]);new_warriors.remove(new_location[2]);new_warriors.remove(new_location[3]);
+			new_warriors.remove((Object)new_location[0]);new_warriors.remove((Object)new_location[1]);
+			new_warriors.remove((Object)new_location[2]);new_warriors.remove((Object)new_location[3]);
 			if(new_warriors.equals(((EndGameState) state).getWarriors())) return state ;
 			
 			else { 
@@ -185,10 +217,11 @@ public class EndGame extends genericSearch implements Problem {
 		}
 		
 		if(action == Operators.SNAP) {
-			if(((EndGameState) state).getStones().size()!=0 || ((EndGameState) state).getIr() == thanos  ) return state;
+			if(((EndGameState) state).getStones().size()!=0 || ((EndGameState) state).getIr() != thanos  ) return state;
 			
 			else {
-				((EndGameState) state).setSnapped(true);
+				EndGameState new_state = new EndGameState(((EndGameState) state).getIr() , ((EndGameState) state).getWarriors(), ((EndGameState) state).getStones(), true);
+				return new_state;
 			}
 			
 			
@@ -261,15 +294,17 @@ public class EndGame extends genericSearch implements Problem {
 		return cost;
 	}
 
-	@Override
-	public Node searchProblem(Problem problem, String Strategy) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	//------Encode Position------
 		public static byte encode_position(byte x, byte y, byte length) {
-			return (byte)((length*x)+ y-128);
+			//System.out.println(x);
+			int x_x = (int) x;
+			int y_y = (int) y;
+			int length_length = (int) length;
+			int num = ((length_length*x_x)+ y_y);
+			System.out.println(num);
+			return (byte) num;
+					
 		}
 		
 		public static byte[] decode_position(byte hash,byte length) {

@@ -14,9 +14,10 @@ public class Node {
 	public Node(State state) {
 		this.state = state;
 		this.pathCost = 0.0;
+		this.depth = 0 ;
 	}
 	
-	public Node(State state, Node parent, Enum operator, double stepCost, int depth) {
+	public Node(State state, Node parent, Enum operator, byte stepCost, int depth) {
 		this(state);
 		this.parent = parent;
 		this.operator = operator;
@@ -42,6 +43,14 @@ public class Node {
 
 	public Object getOperator() {
 		return operator;
+	}
+
+	public int getDepth() {
+		return depth;
+	}
+
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 
 	public void setOperator(Enum operator) {
@@ -78,11 +87,13 @@ public class Node {
 	
 	public String pathToString() {
 		List<Node> nodes = getPathFromRoot();
+		String path = "";
 		for(int i=0; i<nodes.size(); i++) {
-			System.out.println("Operator: " + nodes.get(i).getOperator());
-			System.out.println("State " + nodes.get(i).getState());
+			path = "" + nodes.get(i).getOperator()+",";
+			//System.out.println("State " + nodes.get(i).getState());
 		}
-		return "";
+		path += ";";
+		return path;
 	}
 
 }
