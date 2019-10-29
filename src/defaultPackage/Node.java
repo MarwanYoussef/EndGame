@@ -10,19 +10,23 @@ public class Node {
 	private Enum operator;
 	private double pathCost;
 	private int depth;
+	private int hur;
+	//private boolean hur_flag;
 	
 	public Node(State state) {
 		this.state = state;
 		this.pathCost = 0.0;
 		this.depth = 0 ;
+		this.parent=null;
 	}
 	
-	public Node(State state, Node parent, Enum operator, byte stepCost, int depth) {
+	public Node(State state, Node parent, Enum operator, byte stepCost, int depth,int hur) {
 		this(state);
 		this.parent = parent;
 		this.operator = operator;
 		this.pathCost = parent.pathCost + stepCost;
 		this.depth = depth;
+		this.hur=hur;
 	}
 
 	public State getState() {
@@ -65,6 +69,15 @@ public class Node {
 		this.pathCost = pathCost;
 	}
 	
+	public int getHur() {
+		return hur;
+	}
+
+	public void setHur(int hur) {
+		this.hur = hur;
+	}
+
+	
 	public boolean isRootNode() {
 		return parent == null;
 	}
@@ -78,6 +91,7 @@ public class Node {
 		}
 		
 		path.add(0, current);
+		//System.out.println(path);
 		return path;
 	}
 	
@@ -88,10 +102,10 @@ public class Node {
 	public String pathToString() {
 		List<Node> nodes = getPathFromRoot();
 		String path = "";
-		for(int i=0; i<nodes.size(); i++) {
-			path = "" + nodes.get(i).getOperator()+",";
-			//System.out.println("State " + nodes.get(i).getState());
+		for(int i=1; i<nodes.size(); i++) {
+			path += "" + nodes.get(i).getOperator()+",";
 		}
+		
 		path += ";";
 		return path;
 	}

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class EndGameState implements State {
 	
-	static byte ir;
-	static ArrayList<Byte> warriors = new ArrayList<Byte>();
-	static ArrayList<Byte> stones = new ArrayList<Byte>();
+	byte ir;
+	ArrayList<Byte> warriors = new ArrayList<Byte>();
+	ArrayList<Byte> stones = new ArrayList<Byte>();
 	boolean snapped = false;
 	
 	public EndGameState(byte ir, ArrayList<Byte> warriors, ArrayList<Byte> stones) {
@@ -27,23 +27,23 @@ public class EndGameState implements State {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static byte getIr() {
+	public byte getIr() {
 		return ir;
 	}
-	public static void setIr(byte ir) {
-		EndGameState.ir = ir;
+	public void setIr(byte ir) {
+		this.ir = ir;
 	}
-	public static ArrayList<Byte> getWarriors() {
+	public ArrayList<Byte> getWarriors() {
 		return warriors;
 	}
-	public static void setWarriors(ArrayList<Byte> warriors) {
-		EndGameState.warriors = warriors;
+	public void setWarriors(ArrayList<Byte> warriors) {
+		this.warriors = warriors;
 	}
-	public static ArrayList<Byte> getStones() {
+	public ArrayList<Byte> getStones() {
 		return stones;
 	}
-	public static void setStones(ArrayList<Byte> stones) {
-		EndGameState.stones = stones;
+	public void setStones(ArrayList<Byte> stones) {
+		this.stones = stones;
 	}
 	public boolean isSnapped() {
 		return snapped;
@@ -55,17 +55,17 @@ public class EndGameState implements State {
 	
 	@Override
 	public String toString() {
-		String string_state = "" + getIr() + ",";
+		String string_state = "" + getIr() + ";";
 		for (Byte stone : stones) {
-			string_state += stone + ";";
+			string_state += stone + ",";
 		}
-		string_state += ",";
+		string_state += ";";
 		
 		for (Byte war : warriors) {
-			string_state += war + ";";
+			string_state += war + ",";
 		}
 		
-		string_state += "," + snapped + ",";
+		string_state += ";" + snapped + ";";
 		return string_state;
 	}
 	

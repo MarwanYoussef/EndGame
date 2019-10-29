@@ -10,6 +10,6 @@ public interface Problem {
     public boolean isGoal(State state);
     public ArrayList<Operators> getActions(State state);
     public State getNextState(State state, Operators action);
-    public byte getStepCost(State start, Operators action);
+    public byte getStepCost(State old_state, State new_state , Operators action);
 
 }
