@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+// This is the main class representing our EndGame
+// This class implents the Problem interface and
+// the methods over-ridden here with a new implemntation.
+
 public class EndGame implements Problem {
 	
 	EndGameState inState = new EndGameState();
@@ -12,7 +16,7 @@ public class EndGame implements Problem {
 	static byte columns;
 	static byte thanos;
 	
-	
+	// This constructor takes in a grid and parses the locations from the passsed string.
 	public EndGame(String grid) {
 		// TODO Auto-generated method stub
 				String[] a = grid.split(";");
@@ -56,15 +60,19 @@ public class EndGame implements Problem {
 				System.out.println(inState.getStones().toString());
 	}
 	
+	// Returns the intial state.
 	public State getInitialState() {
 		return this.inState;
 	}
 
+	// Check wether we reached our goal state or not yet.
 	@Override
 	public boolean isGoal(State state) {
 		return ((EndGameState) state).isSnapped();
 	}
 
+	// Given a state, returns a list with all possible actions
+	// that our agent can apply considering different conditions and dead ends.
 	@Override
 	public ArrayList<Operators> getActions(State state) {
 		
@@ -76,9 +84,6 @@ public class EndGame implements Problem {
 		byte new_location_right = encode_position(  location[0],  (byte) (location[1]+1), columns);
 		
 		operators.add(Operators.KILL);
-//		System.out.println(location[0] + "    " + location[1] );
-//		System.out.println(!checklocs(((EndGameState) state).getWarriors(), new_location_up));
-//		System.out.println(check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location_up ));
 		if(	location[0] != 0 
 		&& 	(!checklocs(((EndGameState) state).getWarriors(), new_location_up)) 
 		&& check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location_up )) 
@@ -118,6 +123,7 @@ public class EndGame implements Problem {
 		return operators;
 	}
 
+	// Generate a new state in the search tree with a given operator.
 	@Override
 	public State getNextState(State state, Operators action) {
 		
@@ -125,18 +131,11 @@ public class EndGame implements Problem {
 		if(action == Operators.UP) {
 			byte[] location = decode_position(((EndGameState) state).getIr(), columns);
 			
-//			if(location[0] == 0 ) {
-//				return state;
-//			}
-
-			//new_location = { (byte) (location[0]-1) , location[1] };
 			
 			byte new_location = encode_position( (byte) (location[0]-1), location[1], columns);
 			
-		//	if((!checklocs(((EndGameState) state).getWarriors(), new_location)) && check_thanos( ((EndGameState) state).getStones().size(), this.thanos, new_location ) ) {
 				EndGameState new_state = new EndGameState(new_location, ((EndGameState) state).getWarriors(), ((EndGameState) state).getStones());
 				return new_state;
-		//	}
 		}
 		
 		if(action == Operators.DOWN) {
@@ -239,6 +238,7 @@ public class EndGame implements Problem {
 		return null;
 	}
 
+	// This function returns the cost of traversing a path in the search tree
 	@Override
 	public byte getStepCost(State old_state,State new_state, Operators action) {
 		
@@ -359,6 +359,7 @@ public class EndGame implements Problem {
 		}
 		
 		
+		// This method checks if thanos is in the same cell given a location.
 		public boolean check_thanos(int size_stones, byte thanos_loc, byte ir_loc ) {
 			if(thanos_loc == ir_loc) { 
 				if(size_stones==0) {
@@ -371,6 +372,8 @@ public class EndGame implements Problem {
 			return true;
 		}
 		
+		// This function returns the warriors locaton
+		// next to a given location.
 		public ArrayList<Byte> get_w_around(byte loc) 
 		{
 			byte[] location = decode_position(loc, columns);
