@@ -6,6 +6,12 @@ import java.util.Comparator;
 import java.util.Vector;
 import java.util.HashMap;
 
+// Class representing the Search Tree in which nodes gets expanded
+// until the Search algorithm finds a goal state.
+
+// It implements the Generic search interfance
+// to be overriden with the multiple search algorithms.
+
 public class SearchTree extends genericSearch{
 
 	Vector<Node> Nodes = new Vector<Node>();
@@ -16,10 +22,14 @@ public class SearchTree extends genericSearch{
 	int expanded = 0;
 	boolean hur_flag = false;
 	
+	// Search Tree constructor given a problem.
 	public SearchTree(Problem problem) {
 		this.problem = problem;
 	}
 	
+	// The overrideen method of generic search interface.
+	// Checks for the strategy given and then calls the search
+	// stategy upon.
 	@Override
 	public Node searchProblem(Problem problem, String strategy) {
 		inState = problem.getInitialState();

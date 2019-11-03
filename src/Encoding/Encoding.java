@@ -1,7 +1,5 @@
 package Encoding;
 
-
-
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;

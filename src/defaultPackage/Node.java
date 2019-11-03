@@ -3,6 +3,10 @@ package defaultPackage;
 import java.util.ArrayList;
 import java.util.List;
 
+// This class represents the Nodes and their attributes
+// Since each node represents a state and each node gets expanded
+// by applying some operator.
+
 public class Node {
 	
 	private State state;

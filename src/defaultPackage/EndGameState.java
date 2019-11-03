@@ -2,6 +2,9 @@ package defaultPackage;
 
 import java.util.ArrayList;
 
+
+// This class represents each state that gets expanded during execution.
+
 public class EndGameState implements State {
 	
 	byte ir;
@@ -9,12 +12,14 @@ public class EndGameState implements State {
 	ArrayList<Byte> stones = new ArrayList<Byte>();
 	boolean snapped = false;
 	
+	// EndGameState constructor used to intialize any state.
 	public EndGameState(byte ir, ArrayList<Byte> warriors, ArrayList<Byte> stones) {
 		this.ir = ir;
 		this.warriors = warriors;
 		this.stones = stones;
 	}
 	
+	// Another constructor with different parameters.
 	public EndGameState(byte ir, ArrayList<Byte> warriors, ArrayList<Byte> stones, boolean snapped) {
 		this.ir = ir;
 		this.warriors = warriors;
@@ -22,7 +27,7 @@ public class EndGameState implements State {
 		this.snapped = snapped;
 	}
 	
-	
+	// Another constructor with no parameters.
 	public EndGameState() {
 		// TODO Auto-generated constructor stub
 	}

@@ -1,10 +1,11 @@
 package defaultPackage;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
+
+// This interface is implemented by the EndGame.Java and these
+// methods were defined there.
 public interface Problem {
-	
 	
 	public State getInitialState();
     public boolean isGoal(State state);

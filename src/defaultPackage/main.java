@@ -14,6 +14,7 @@ public class Main {
 		SearchTree serching = new SearchTree(e);
 		Node result = serching.searchProblem(e, strategy);
 		
+		// Boolean flag to draw a graphical representation for the 2D map.
 		if(visualize) {
 			drawGrid(result.getPathFromRoot());
 		}
@@ -27,12 +28,14 @@ public class Main {
 		return result_string;
 	}
 
+	// Main Method to run code.
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String result = solve("5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3", "AS2", true);
 		System.out.println(result);
 	}
 	
+	// Function to draw Grid for visualize boolean flag.
 	public static void drawGrid(List<Node> list) {
 		int count =0;
 		while(!list.isEmpty()) {
@@ -81,10 +84,6 @@ public class Main {
 			System.out.println("===============");
 			list.remove(0);
 		}
-	}
-	
-	public static void toString(String grid) {
-		
 	}
 
 }

@@ -7,7 +7,7 @@ import java.util.Collections;
 public class EndGame implements Problem {
 	
 	EndGameState inState = new EndGameState();
-	byte[][] grid;
+	byte[][] grid; 
 	static byte rows;
 	static byte columns;
 	static byte thanos;
